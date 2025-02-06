@@ -6,8 +6,6 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -18,17 +16,16 @@ class MyApp extends StatelessWidget {
 }
 
 class WeatherScreen extends StatefulWidget {
-  const WeatherScreen({super.key});
-
   @override
   _WeatherScreenState createState() => _WeatherScreenState();
 }
 
 class _WeatherScreenState extends State<WeatherScreen> {
-  TextEditingController _cityController = TextEditingController();
+  final TextEditingController _cityController = TextEditingController();
   String _cityName = '';
   String _temperature = '';
   String _weatherCondition = '';
+  List<Map<String, String>> _weeklyForecast = [];
 
   void _fetchWeather() {
     final random = Random();
@@ -36,6 +33,13 @@ class _WeatherScreenState extends State<WeatherScreen> {
       _cityName = _cityController.text;
       _temperature = '${random.nextInt(16) + 15}°C';
       _weatherCondition = ['Sunny', 'Cloudy', 'Rainy'][random.nextInt(3)];
+      _weeklyForecast = List.generate(7, (index) {
+        return {
+          'day': 'Day ${index + 1}',
+          'temperature': '${random.nextInt(16) + 15}°C',
+          'condition': ['Sunny', 'Cloudy', 'Rainy'][random.nextInt(3)],
+        };
+      });
     });
   }
 
@@ -52,7 +56,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
               controller: _cityController,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
-                labelText: 'Enter City Name',
+                labelText: 'Enter city name',
               ),
             ),
             SizedBox(height: 20),
@@ -65,6 +69,22 @@ class _WeatherScreenState extends State<WeatherScreen> {
             Text('Temperature: $_temperature', style: TextStyle(fontSize: 18)),
             Text('Condition: $_weatherCondition',
                 style: TextStyle(fontSize: 18)),
+            SizedBox(height: 20),
+            Text('7-Day Forecast',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            Expanded(
+              child: ListView.builder(
+                itemCount: _weeklyForecast.length,
+                itemBuilder: (context, index) {
+                  final dayForecast = _weeklyForecast[index];
+                  return ListTile(
+                    title: Text(dayForecast['day']!),
+                    subtitle: Text(
+                        '${dayForecast['temperature']} - ${dayForecast['condition']}'),
+                  );
+                },
+              ),
+            ),
           ],
         ),
       ),
