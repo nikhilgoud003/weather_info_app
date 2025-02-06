@@ -25,10 +25,10 @@ class WeatherScreen extends StatefulWidget {
 }
 
 class _WeatherScreenState extends State<WeatherScreen> {
-  final TextEditingController _cityController = TextEditingController();
-  final String _cityName = '';
-  final String _temperature = '';
-  final String _weatherCondition = '';
+  TextEditingController _cityController = TextEditingController();
+  String _cityName = '';
+  String _temperature = '';
+  String _weatherCondition = '';
 
   void _fetchWeather() {
     final random = Random();
@@ -57,7 +57,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: null,
+              onPressed: _fetchWeather,
               child: Text('Fetch Weather'),
             ),
             SizedBox(height: 20),
