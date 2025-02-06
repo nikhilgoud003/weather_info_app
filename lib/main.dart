@@ -30,6 +30,15 @@ class _WeatherScreenState extends State<WeatherScreen> {
   final String _temperature = '';
   final String _weatherCondition = '';
 
+  void _fetchWeather() {
+    final random = Random();
+    setState(() {
+      _cityName = _cityController.text;
+      _temperature = '${random.nextInt(16) + 15}°C';
+      _weatherCondition = ['Sunny', 'Cloudy', 'Rainy'][random.nextInt(3)];
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
