@@ -52,7 +52,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
               controller: _cityController,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
-                labelText: 'Enter city name',
+                labelText: 'Enter City Name',
               ),
             ),
             SizedBox(height: 20),
